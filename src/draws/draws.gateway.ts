@@ -8,18 +8,17 @@ export class DrawsGateway {
     constructor(private readonly drawsService: DrawsService) {}
 
     @SubscribeMessage('draw')
-    draw(@ConnectedSocket() socket: Socket, @MessageBody() addPointsInput: AddPointsInput) {
-        // this.drawsService.addPoints(addPointsInput)
+    async draw(@ConnectedSocket() socket: Socket, @MessageBody() addPointsInput: AddPointsInput) {
+        const result = await this.drawsService.addPoints(addPointsInput)
 
-        return socket.to(addPointsInput.gameId).emit('update-draw', addPointsInput.coords)
+        return socket.to(addPointsInput.gameId).emit('update-draw', result)
     }
 
-    @SubscribeMessage('join-room')
-    async onRoomJoin(@ConnectedSocket() socket: Socket, @MessageBody() roomId: string) {
-        console.log(roomId)
+    @SubscribeMessage('join-draw-room')
+    async onRoomJoin(@ConnectedSocket() socket: Socket, @MessageBody() { gameId }: { gameId: string }) {
+        socket.join(gameId)
 
-        socket.join(roomId)
-
+        console.log(gameId)
         // Send last messages to the connected user
         socket.emit('new-user-connected', 'user-id')
     }

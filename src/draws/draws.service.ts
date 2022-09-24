@@ -11,7 +11,12 @@ export class DrawsService {
         private repository: Repository<InProgressPoint>,
     ) {}
 
-    addPoints(addDotsInput: AddPointsInput) {
-        this.repository.save(addDotsInput.coords.map((c) => ({ ...c, game: { id: addDotsInput.gameId } })))
+    async addPoints(addDotsInput: AddPointsInput) {
+        console.log(addDotsInput.coords)
+
+        const coords = addDotsInput.coords.map((c) => ({ ...c, game: { id: addDotsInput.gameId } }))
+        console.log(coords)
+
+        return await this.repository.save(coords)
     }
 }

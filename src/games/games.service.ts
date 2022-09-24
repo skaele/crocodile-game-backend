@@ -22,7 +22,7 @@ export class GamesService {
     }
 
     async findOne(id: string) {
-        return await this.repository.findOneBy({ id })
+        return await this.repository.findOne({ where: { id },relations: ['inProgressPoints'] })
     }
 
     async update(updateGameDto: UpdateGameDto) {

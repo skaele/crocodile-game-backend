@@ -12,21 +12,25 @@ export class InProgressPoint {
 
     @Column({
         nullable: false,
+        type: 'integer',
     })
     offsetX: number
 
     @Column({
         nullable: false,
+        type: 'integer',
     })
     offsetY: number
 
     @Column({
         nullable: false,
+        type: 'integer',
     })
     movementX: number
 
     @Column({
         nullable: false,
+        type: 'integer',
     })
     movementY: number
 }
